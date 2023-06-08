@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+# Sorting Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple sorting game implemented using React. The game generates a random set of numbers and allows the user to drag and drop them into buckets in ascending or descending order. The user can then check their answer and see if it is correct or reset the game to start again.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Getting Started](#getting-started)
+- [Components](#components)
+  - [SortingGame](#sortinggame)
+- [How the Game Works](#how-the-game-works)
+- [Dependencies](#dependencies)
+- [License](#license)
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To run the Sorting Game on your local machine, follow these steps:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Make sure you have Node.js and npm (Node Package Manager) installed on your machine.
+2. Clone the repository or download the source code files.
+3. Open a terminal or command prompt and navigate to the project directory.
+4. Run the following command to install the required dependencies:
 
-### `npm test`
+   ```
+   npm install
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. Once the dependencies are installed, run the following command to start the development server:
 
-### `npm run build`
+   ```
+   npm start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6. Open your web browser and visit `http://localhost:3000` to see the Sorting Game in action.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Components
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The Sorting Game is composed of a single component:
 
-### `npm run eject`
+### SortingGame
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This component represents the main game screen and manages the state of the game.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### State
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The SortingGame component manages the following state variables:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `selectedOrder`: Stores the selected sorting order ("asc" for ascending, "desc" for descending).
+- `generatedAnswer`: Stores the randomly generated set of numbers.
+- `optionsPlaced`: Stores the numbers placed by the user into the buckets.
+- `isCheckButtonDisabled`: Determines if the "Check" button should be disabled.
+- `isCorrect`: Stores the correctness of the user's answer (null for not checked yet, true for correct, false for incorrect).
+- `isAnswerShown`: Determines if the correct answer should be shown.
 
-## Learn More
+#### useEffect Hooks
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The SortingGame component uses the following useEffect hooks:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `useEffect(() => {}, [])`: Runs once on component mount to reset the game.
+- `useEffect(() => {}, [optionsPlaced, generatedAnswer])`: Updates the state of `isCheckButtonDisabled` when options are placed or generated.
 
-### Code Splitting
+#### Event Handlers
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The SortingGame component defines the following event handlers:
 
-### Analyzing the Bundle Size
+- `handleSortOrderChange(e)`: Handles the change event of the sort order radio buttons and updates the `selectedOrder` state.
+- `checkAnswer()`: Checks the user's answer by comparing it with the sorted answer and updates the `isCorrect` and `isAnswerShown` states accordingly.
+- `resetGame()`: Resets the game by resetting all state variables and generating a new set of random numbers.
+- `dragStart(e)`, `dragEnd(e)`, `dragOver(e)`, `dragEnter(e)`, `dragLeave(e)`, `dragDrop(e)`: Event handlers for drag and drop functionality.
+- `fillOptionsWithAnswer()`: Fills the options container with the correct answer when the user's answer is incorrect.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Rendering
 
-### Making a Progressive Web App
+The SortingGame component renders the following elements:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- `div.contain`: Wraps the entire game container.
+- `div.container`: Contains the game elements.
+- `div#head`: Displays the game heading.
+- `div.sort-options`: Displays the sorting order options.
+- `div.options-container`: Contains the options section.
+- `div.options`: Displays the generated
 
-### Advanced Configuration
+ answer numbers as draggable options.
+- `div.bucket-container`: Contains the buckets for dropping the options.
+- `div.bucket`: Represents each bucket for sorting the options.
+- `div.btn`: Contains the check and reset buttons.
+- `button.check-btn`: Triggers the checkAnswer() function to check the user's answer.
+- `button.reset-btn`: Triggers the resetGame() function to reset the game.
+- `div.result-container`: Contains the result message.
+- `div.result`: Displays the correctness message based on the user's answer.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## How the Game Works
 
-### Deployment
+1. The game starts by generating a set of five random numbers using the `generateRandomIntegers()` function.
+2. The user can choose the sorting order by selecting either "Ascending" or "Descending" using the radio buttons.
+3. The generated numbers are displayed as draggable options in the "Options" section.
+4. The user can drag and drop the options into the buckets to sort them.
+5. As the user drops an option into a bucket, it gets placed there, and the `optionsPlaced` state is updated.
+6. The "Check" button becomes enabled when all options are placed into the buckets.
+7. Clicking the "Check" button triggers the `checkAnswer()` function.
+8. The `checkAnswer()` function compares the user's answer with the sorted answer based on the selected sorting order.
+9. If the user's answer is correct, a success message is displayed.
+10. If the user's answer is incorrect, an error message is displayed, and the correct answer is shown by filling the options with the sorted answer.
+11. The user can reset the game at any time by clicking the "Reset" button, which clears the current answer, generates new random numbers, and resets the game state.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Dependencies
 
-### `npm run build` fails to minify
+The Sorting Game uses the following dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React: A JavaScript library for building user interfaces.
+- react-dom: Provides DOM-specific methods that can be used at the top level of a web application to enable the use of React components.
+- react-scripts: Configuration and scripts for Create React App.
+
+## License
+
+This Sorting Game is open source and released under the [MIT License](https://opensource.org/licenses/MIT). Feel free to modify and use it to suit your needs.
