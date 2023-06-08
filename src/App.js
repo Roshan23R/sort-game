@@ -15,7 +15,7 @@ const SortingGame = () => {
 
   const handleSortOrderChange = (e) => {
     setSelectedOrder(e.target.value);
-    // resetGame();
+    resetGame();
   };
 
   const checkAnswer = () => {
@@ -47,23 +47,6 @@ const SortingGame = () => {
     setIsCheckButtonDisabled(!allBucketsFilled);
   }, [optionsPlaced, generatedAnswer]);
 
-
-  const showCorrectAnswer = (sortedAnswer) => {
-    const optionsContainer = document.querySelector(".options");
-
-    optionsPlaced.forEach((option) => {
-      option.classList.remove("placed");
-      optionsContainer.appendChild(option);
-    });
-
-    const correctAnswer = sortedAnswer.map((value, index) => (
-      <div className="option" key={index}>
-        <span>{value}</span>
-      </div>
-    ));
-
-    setOptionsPlaced(correctAnswer);
-  };
 
   const fillOptionsWithAnswer = () => {
     const optionsContainer = document.querySelector(".options");
