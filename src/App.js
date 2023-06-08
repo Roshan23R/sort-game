@@ -7,6 +7,7 @@ const SortingGame = () => {
   const [optionsPlaced, setOptionsPlaced] = useState([]);
   const [isCheckButtonDisabled, setIsCheckButtonDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [isAnswerShown, setAnswerShown] = useState(false);
 
   useEffect(() => {
     resetGame();
@@ -14,7 +15,7 @@ const SortingGame = () => {
 
   const handleSortOrderChange = (e) => {
     setSelectedOrder(e.target.value);
-    resetGame();
+    // resetGame();
   };
 
   const checkAnswer = () => {
@@ -33,8 +34,10 @@ const SortingGame = () => {
 
     if (JSON.stringify(userAnswer) === JSON.stringify(sortedAnswer)) {
       setIsCorrect(true);
+      setAnswerShown(false);
     } else {
       setIsCorrect(false);
+      setAnswerShown(true);
       fillOptionsWithAnswer();
     }
   };
@@ -90,8 +93,13 @@ const SortingGame = () => {
     const generatedIntegers = generateRandomIntegers();
     setGeneratedAnswer(generatedIntegers);
     setOptionsPlaced([]);
+    if(isAnswerShown){
+      let optionsContainer = document.querySelector(".options");
+      optionsContainer.innerHTML = "";
+      setAnswerShown(false);
+    }
 
-    const optionsContainer = document.querySelector(".options");
+    let optionsContainer = document.querySelector(".options");
     const optionsInBuckets = document.querySelectorAll(".bucket .option");
     optionsInBuckets.forEach((option) => {
       option.classList.remove("placed");
