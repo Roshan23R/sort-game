@@ -2,6 +2,12 @@
 
 This is a simple sorting game implemented using React. The game generates a random set of numbers and allows the user to drag and drop them into buckets in ascending or descending order. The user can then check their answer and see if it is correct or reset the game to start again.
 
+![home](https://github.com/Roshan23R/sort-game/assets/82640582/d0e9b391-2f53-4edd-85ca-8eefb4644394)
+
+![correct](https://github.com/Roshan23R/sort-game/assets/82640582/4362bd02-fd78-427a-8a2b-c936619601e9)
+
+![wrong](https://github.com/Roshan23R/sort-game/assets/82640582/39e6bc0d-89e4-4136-8f87-98e60186b447)
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
